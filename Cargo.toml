@@ -1,0 +1,8 @@
+[package]
+name = "svg-to-pico"
+version = "0.1.0"
+edition = "2021"
+description = "Convert SVG files to PicoSVG."
+
+[dependencies]
+clap = { version = "3.1.8", features = ["cargo"] }

@@ -6,3 +6,7 @@ description = "Convert SVG files to PicoSVG."
 
 [dependencies]
 clap = { version = "3.1.8", features = ["cargo"] }
+
+[dev-dependencies]
+assert_cmd = "2.0"
+predicates = "2.1"

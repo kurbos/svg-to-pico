@@ -6,9 +6,10 @@ use std::path::{Path, PathBuf};
 /// `PathArg` stores a path argument received from the user through CLI.
 ///
 /// For common use cases, paths provided will either be directories or files,
-/// possibly accessed through a symlink. However, it is possible to receive other paths;
-/// for example, on Windows, one might receive a Universal Naming Convention (UNC) path.
-/// `PathArg` is an enum to keep track of such variety.
+/// possibly accessed through a symlink. However, it is possible to
+/// receive other paths; for example, on Windows, one might receive a
+/// Universal Naming Convention (UNC) path. `PathArg` is an enum to keep track
+/// of such variety.
 pub enum PathArg {
     File(PathBuf),
     Directory(PathBuf),

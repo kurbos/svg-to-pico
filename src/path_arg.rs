@@ -27,6 +27,14 @@ impl PathArg {
         }
     }
 
+    pub fn exists(&self) -> bool {
+        self.inner().exists()
+    }
+
+    pub fn is_file(&self) -> bool {
+        matches!(self, PathArg::File(_))
+    }
+
     pub fn type_as_string(&self) -> String {
         match self {
             PathArg::File(_) => "file".into(),

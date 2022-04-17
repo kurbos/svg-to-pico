@@ -5,7 +5,7 @@ edition = "2021"
 description = "Convert SVG files to PicoSVG."
 
 [dependencies]
-clap = { version = "3.1.8", features = ["cargo"] }
+clap = { version = "3.1.9", features = ["cargo"] }
 log = "0.4"
 env_logger = "0.9"
 

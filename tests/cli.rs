@@ -6,12 +6,12 @@ use std::fs::{create_dir_all, remove_dir, remove_file, File};
 use std::process::Command;
 
 #[test]
-fn input_is_file() -> Result<(), Box<dyn std::error::Error>> {
-    let mut cmd = Command::cargo_bin("svg-to-pico")?;
+fn input_is_file() {
+    let mut cmd = Command::cargo_bin("svg-to-pico").unwrap();
 
     // might want to consider using a crate like `tempfile` in the future?
-    let test_dir = current_dir()?.join("input_file_test");
-    create_dir_all(&test_dir)?;
+    let test_dir = current_dir().unwrap().join("input_file_test");
+    create_dir_all(&test_dir).unwrap();
     println!(
         "successfully created test dir {}: {}",
         test_dir.exists(),
@@ -19,41 +19,39 @@ fn input_is_file() -> Result<(), Box<dyn std::error::Error>> {
     );
     let test_file_path = test_dir.join("test_file.tf");
     // create the file; semicolon drops it, closing it
-    File::create(&test_file_path)?;
+    File::create(&test_file_path).unwrap();
     println!("created temp file at: {}", test_file_path.display());
 
-    cmd.arg("-i").arg(test_file_path.as_os_str());
-    cmd.arg("-o").arg("test/file/some/output");
-    cmd.assert().stdout(predicate::str::contains("input file"));
-    println!("correctly detected input test file as file");
+    cmd.arg(test_file_path.as_os_str());
+    cmd.arg("test/file/some/output");
+    let result = cmd.assert().try_stdout(predicate::str::contains("input file"));
 
-    remove_file(&test_file_path)?;
+    remove_file(&test_file_path).unwrap();
     println!("removed test file: {}", !test_file_path.exists());
-    remove_dir(&test_dir)?;
+    remove_dir(&test_dir).unwrap();
     println!("removed test dir: {}", !test_dir.exists());
-    Ok(())
+    result.unwrap();
 }
 
 #[test]
-fn input_is_dir() -> Result<(), Box<dyn std::error::Error>> {
-    let mut cmd = Command::cargo_bin("svg-to-pico")?;
+fn input_is_dir() {
+    let mut cmd = Command::cargo_bin("svg-to-pico").unwrap();
 
     // might want to consider using a crate like `tempfile` in the future?
-    let test_dir = current_dir()?.join("input_dir_test");
-    create_dir_all(&test_dir)?;
+    let test_dir = current_dir().unwrap().join("input_dir_test");
+    create_dir_all(&test_dir).unwrap();
     println!(
         "successfully created test dir {}: {}",
         test_dir.exists(),
         test_dir.display()
     );
 
-    cmd.arg("-i").arg(test_dir.as_os_str());
-    cmd.arg("-o").arg("test/file/some/output");
-    cmd.assert()
-        .stdout(predicate::str::contains("input directory"));
-    println!("correctly detected input test file as directory");
+    cmd.arg(test_dir.as_os_str());
+    cmd.arg("test/file/some/output");
+    let result = cmd.assert()
+        .try_stdout(predicate::str::contains("input directory"));
 
-    remove_dir(&test_dir)?;
+    remove_dir(&test_dir).unwrap();
     println!("removed test dir: {}", !test_dir.exists());
-    Ok(())
+    result.unwrap();
 }

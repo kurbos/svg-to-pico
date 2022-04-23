@@ -1,8 +1,4 @@
-use clap::ArgMatches;
-use std::ffi::OsStr;
-use std::fmt;
-use std::fmt::Formatter;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 /// `PathArg` stores a path argument received from the user through CLI.
 ///

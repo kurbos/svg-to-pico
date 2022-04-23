@@ -9,13 +9,13 @@ use std::path::{Path, PathBuf};
 pub fn parse_paths(matches: &ArgMatches) -> Result<PathArgs, String> {
     let input = PathBuf::from(
         matches
-            .value_of_os("input")
+            .value_of_os("INPUT")
             .ok_or_else(|| "Input path must be provided.".to_string())?,
     );
 
     let output = PathBuf::from(
         matches
-            .value_of_os("output")
+            .value_of_os("OUTPUT")
             .ok_or_else(|| "Output path must be provided.".to_string())?,
     );
 
@@ -64,20 +64,20 @@ fn main() {
     env_logger::init();
 
     // version and about are picked up from Cargo.toml by the command! macro
+    // angle brackets (e.g. <INPUT>) specifies that it is a required argument
     let matches = command!()
         .arg_required_else_help(true)
         .arg(
             arg!(
-                [INPUT] "Input file or directory"
+                <INPUT> "Input file or directory"
             )
             .allow_invalid_utf8(true),
         )
         .arg_required_else_help(true)
         .arg(
             arg!(
-                [OUTPUT] "Output file or directory"
+                <OUTPUT> "Output file or directory"
             )
-            .required(true)
             .allow_invalid_utf8(true),
         )
         .get_matches();
